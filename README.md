@@ -58,3 +58,4 @@ Upload `deploy/backend/` → VPS + Nginx `/api` proxy
 - `docs/HOSTINGER_DEPLOY.md`
 - `docs/WEB_MIGRATION_TODO.md`
 - `deploy/README.md`
+# MT_crm
