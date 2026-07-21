@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+backend/.venv/
+**/__pycache__/
+**/*.pyc
+.Python
+
+# Secrets
+.env
+# Generated deploy copy of backend (source of truth is /backend)
+deploy/backend/
+backend/.env
+deploy/backend/.env
+
+# Build / IDE
+dist/
+.vite/
+release/
+out/
+build/
+.idea/
+.vscode/
+.DS_Store
+*.log
+*.exe
+*.msi
+*.zip
+*.asar
+win-unpacked/
+
+# Legacy desktop (not part of web deploy)
+electron/
+test/
+docs/malwa-estimate-english-main/
+docs/hindi-estimate-malwa-main/
+BACKEND_COMPLETE_ARCHITECTURE (1).md
+*.bat
+*.ps1
+!scripts/**/*.mjs
+.env.windows
+test-mysql-connection.cjs
+create-data-directories.bat
+build-installer.bat
+build-windows-installer.ps1
+electron-builder.json
+LICENSE

@@ -1,0 +1,1353 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark mode root styles */
+.dark {
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+}
+
+.dark body {
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+}
+
+/* Shine animation for sidebar */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(400%) rotate(25deg);
+  }
+}
+
+.animate-shine {
+  animation: shine 3s ease-in-out infinite;
+}
+
+/* Custom scrollbar for better aesthetics */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  @apply dark:bg-gray-800;
+}
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+  @apply dark:bg-gray-600;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+   @apply dark:bg-gray-500;
+}
+
+/* Theme 1: light "Brushed Platinum" metallic Malwa skin — soft silver surfaces
+   with refined champagne-gold accents (easy on the eyes, premium, not harsh). */
+.theme-1 {
+  background:
+    radial-gradient(circle at 42% -8%, rgba(255, 255, 255, 0.65), transparent 34%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.5), transparent 20%, rgba(255, 255, 255, 0.22) 44%, transparent 64%),
+    repeating-linear-gradient(155deg, rgba(255, 255, 255, 0.45) 0 1px, rgba(170, 182, 198, 0.10) 1px 4px, transparent 4px 10px),
+    linear-gradient(145deg, #eef1f5 0%, #e1e6ed 45%, #d4dae3 100%);
+  color: #2a2f37;
+}
+
+.theme-1 body {
+  background:
+    radial-gradient(circle at 50% -12%, rgba(255, 255, 255, 0.55), transparent 28%),
+    radial-gradient(circle at 92% 18%, rgba(201, 168, 74, 0.07), transparent 26%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.5), transparent 22%, rgba(255, 255, 255, 0.2) 46%, transparent 68%),
+    repeating-linear-gradient(155deg, rgba(255, 255, 255, 0.42) 0 1px, rgba(170, 182, 198, 0.12) 1px 4px, transparent 4px 10px),
+    linear-gradient(145deg, #eef1f5 0%, #e1e6ed 46%, #d4dae3 100%);
+  color: #2a2f37;
+}
+
+.theme-1 main,
+.theme-1 .bg-gray-50,
+.theme-1 .dark\:bg-dark-background {
+  background:
+    radial-gradient(circle at 52% -10%, rgba(255, 255, 255, 0.5), transparent 28%),
+    linear-gradient(110deg, rgba(255, 255, 255, 0.46), transparent 20%, rgba(255, 255, 255, 0.2) 46%, transparent 70%),
+    repeating-linear-gradient(155deg, rgba(255, 255, 255, 0.4) 0 1px, rgba(170, 182, 198, 0.12) 1px 5px, transparent 5px 11px),
+    linear-gradient(145deg, #f0f3f7 0%, #e3e8ef 48%, #d7dde5 100%) !important;
+  color: #2a2f37;
+}
+
+.theme-1 aside,
+.theme-1 aside > div {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.45) 25%, transparent 25%) 0 0 / 14px 14px,
+    linear-gradient(160deg, #eaeef4 0%, #dde3eb 44%, #cfd6e0 100%) !important;
+  box-shadow:
+    inset -14px 0 26px rgba(120, 132, 150, 0.16),
+    inset 1px 0 0 rgba(201, 168, 74, 0.45),
+    8px 0 24px rgba(120, 132, 150, 0.18) !important;
+}
+
+.theme-1 header {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.5) 25%, transparent 25%) 0 0 / 10px 10px,
+    linear-gradient(180deg, #f4f6fa 0%, #e9edf3 58%, #dde3eb 100%) !important;
+  border-bottom: 1px solid rgba(201, 168, 74, 0.7) !important;
+  box-shadow: 0 4px 14px rgba(120, 132, 150, 0.18), inset 0 -1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.theme-1 header h1,
+.theme-1 h1,
+.theme-1 h2,
+.theme-1 h3,
+.theme-1 h4,
+.theme-1 label {
+  color: #2a2f37 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.theme-1 p,
+.theme-1 span,
+.theme-1 div {
+  border-color: rgba(150, 162, 180, 0.30);
+}
+
+.theme-1 .text-gray-500,
+.theme-1 .text-gray-600,
+.theme-1 .text-gray-700,
+.theme-1 .dark\:text-dark-text-secondary {
+  color: #5a6470 !important;
+}
+
+.theme-1 nav a,
+.theme-1 nav button,
+.theme-1 aside nav > div > div,
+.theme-1 aside [role="button"] {
+  color: #2f3641 !important;
+}
+
+.theme-1 aside nav > div > div,
+.theme-1 aside nav a,
+.theme-1 aside a {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3)),
+    linear-gradient(180deg, #eef2f7, #dee4ec) !important;
+  border: 1px solid rgba(150, 162, 180, 0.32);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 3px rgba(120, 132, 150, 0.16);
+}
+
+.theme-1 aside nav > div > div.bg-brand-red,
+.theme-1 aside nav a.active,
+.theme-1 aside .bg-brand-red {
+  background: linear-gradient(180deg, #d8b75a 0%, #b8902a 100%) !important;
+  border: 1px solid rgba(201, 168, 74, 0.9) !important;
+  color: #3a2c08 !important;
+  box-shadow:
+    0 0 12px rgba(201, 168, 74, 0.42),
+    inset 0 1px 0 rgba(255, 245, 210, 0.7),
+    inset 0 -3px 8px rgba(120, 90, 20, 0.22) !important;
+}
+
+.theme-1 .bg-white,
+.theme-1 .dark\:bg-dark-card,
+.theme-1 .dark\:bg-gray-800,
+.theme-1 .dark\:bg-gray-700 {
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.9), transparent 30%, rgba(255, 255, 255, 0.55) 60%, transparent 85%),
+    linear-gradient(145deg, #ffffff, #eef2f7) !important;
+  color: #2a2f37 !important;
+}
+
+.theme-1 .rounded-xl,
+.theme-1 .rounded-lg {
+  border-color: rgba(201, 168, 74, 0.55) !important;
+}
+
+.theme-1 .shadow-card,
+.theme-1 .dark\:shadow-dark-card,
+.theme-1 .shadow-xl,
+.theme-1 .shadow-lg {
+  box-shadow:
+    0 14px 30px rgba(120, 132, 150, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 0 0 1px rgba(201, 168, 74, 0.14) !important;
+}
+
+.theme-1 input,
+.theme-1 select,
+.theme-1 textarea {
+  background:
+    linear-gradient(180deg, #ffffff, #f3f6fa) !important;
+  color: #2a2f37 !important;
+  border: 1px solid rgba(150, 162, 180, 0.7) !important;
+  box-shadow:
+    inset 0 1px 3px rgba(120, 132, 150, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+.theme-1 input::placeholder,
+.theme-1 textarea::placeholder {
+  color: rgba(110, 122, 138, 0.7) !important;
+}
+
+.theme-1 button,
+.theme-1 .btn,
+.theme-1 a[href="/settings"],
+.theme-1 button[type="submit"] {
+  border-radius: 999px !important;
+}
+
+.theme-1 button:not([disabled]),
+.theme-1 .bg-brand-red,
+.theme-1 .bg-red-600,
+.theme-1 .from-blue-600,
+.theme-1 .to-purple-600 {
+  border: 1px solid #d4af37 !important;
+}
+
+.theme-1 button.bg-brand-red,
+.theme-1 button[class*="bg-brand-red"],
+.theme-1 button[class*="from-blue-600"],
+.theme-1 button[class*="bg-red-600"],
+.theme-1 .bg-brand-red {
+  background: linear-gradient(180deg, #d8b75a 0%, #b8902a 100%) !important;
+  color: #3a2c08 !important;
+  box-shadow: 0 5px 12px rgba(120, 90, 20, 0.26), inset 0 1px 0 rgba(255, 245, 210, 0.7) !important;
+}
+
+.theme-1 .border-b,
+.theme-1 .border-t,
+.theme-1 .border,
+.theme-1 .dark\:border-gray-700,
+.theme-1 .dark\:border-dark-border {
+  border-color: rgba(201, 168, 74, 0.38) !important;
+}
+
+.theme-1 ol[role="list"] li [class*="rounded-full"] {
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.9), transparent 22%),
+    linear-gradient(145deg, #f3f6fa 0%, #dde3eb 52%, #cfd6e0 100%) !important;
+  border: 2px solid rgba(150, 162, 180, 0.55) !important;
+  color: #3a4250 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -4px 8px rgba(120, 132, 150, 0.18),
+    0 5px 10px rgba(120, 132, 150, 0.22) !important;
+}
+
+.theme-1 ol[role="list"] li [class*="bg-brand-red"] {
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 245, 210, 0.85), transparent 22%),
+    linear-gradient(145deg, #d8b75a 0%, #b8902a 72%) !important;
+  border-color: rgba(201, 168, 74, 0.95) !important;
+  color: #3a2c08 !important;
+  box-shadow:
+    0 0 14px rgba(201, 168, 74, 0.45),
+    inset 0 1px 0 rgba(255, 245, 210, 0.7) !important;
+}
+
+.theme-1 ol[role="list"] .bg-gray-200,
+.theme-1 ol[role="list"] .dark\:bg-gray-700 {
+  background: linear-gradient(180deg, #e3e8ef, #cfd6e0) !important;
+  height: 0.4rem !important;
+  border-radius: 999px;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8), inset 0 -2px 3px rgba(120, 132, 150, 0.2);
+}
+
+.theme-1 ol[role="list"] .bg-brand-red {
+  background: linear-gradient(90deg, #b8902a, #d8b75a, #e6cd7e) !important;
+  box-shadow: 0 0 10px rgba(201, 168, 74, 0.45);
+}
+
+.theme-1 #estimate-body,
+.theme-1 #invoice-body,
+.theme-1 #invoice-print-view {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.12)),
+    linear-gradient(90deg, #2b1410, #130b09 42%, #2f1710) !important;
+  border: 8px solid #342214;
+  border-radius: 14px;
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.66),
+    inset 0 0 0 4px rgba(212, 175, 55, 0.74),
+    inset 0 0 28px rgba(0, 0, 0, 0.72);
+  color: #2d2219 !important;
+  padding: 1rem;
+}
+
+.theme-1 #estimate-body > div,
+.theme-1 #invoice-body > div,
+.theme-1 #invoice-print-view > div {
+  background:
+    radial-gradient(circle at 20% 12%, rgba(255, 255, 255, 0.58), transparent 22%),
+    linear-gradient(135deg, rgba(137, 96, 42, 0.05) 25%, transparent 25%) 0 0 / 11px 11px,
+    #f4f1ea !important;
+  color: #2d2219 !important;
+  box-shadow: inset 0 0 18px rgba(52, 34, 20, 0.22);
+}
+
+.theme-1 #estimate-body .bg-red-600,
+.theme-1 #invoice-body .bg-red-600,
+.theme-1 #invoice-print-view .bg-red-600 {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08) 25%, transparent 25%) 0 0 / 10px 10px,
+    linear-gradient(180deg, #5b0d16 0%, #2b0507 100%) !important;
+  border: 1px solid rgba(212, 175, 55, 0.8);
+  box-shadow: inset 0 1px 0 rgba(255, 231, 151, 0.32), 0 3px 8px rgba(0, 0, 0, 0.35);
+}
+
+.theme-1 #estimate-body h1,
+.theme-1 #invoice-body h1,
+.theme-1 #invoice-print-view h1,
+.theme-1 #estimate-body h2,
+.theme-1 #invoice-body h2,
+.theme-1 #invoice-print-view h2,
+.theme-1 #estimate-body h3,
+.theme-1 #invoice-body h3,
+.theme-1 #invoice-print-view h3,
+.theme-1 #estimate-body h4,
+.theme-1 #invoice-body h4,
+.theme-1 #invoice-print-view h4,
+.theme-1 #estimate-body h5,
+.theme-1 #invoice-body h5,
+.theme-1 #invoice-print-view h5,
+.theme-1 #estimate-body p,
+.theme-1 #invoice-body p,
+.theme-1 #invoice-print-view p,
+.theme-1 #estimate-body a,
+.theme-1 #invoice-body a,
+.theme-1 #invoice-print-view a,
+.theme-1 #estimate-body div,
+.theme-1 #invoice-body div,
+.theme-1 #invoice-print-view div,
+.theme-1 #estimate-body span,
+.theme-1 #invoice-body span,
+.theme-1 #invoice-print-view span,
+.theme-1 #estimate-body td,
+.theme-1 #invoice-body td,
+.theme-1 #invoice-print-view td,
+.theme-1 #estimate-body th,
+.theme-1 #invoice-body th,
+.theme-1 #invoice-print-view th,
+.theme-1 #estimate-body li,
+.theme-1 #invoice-body li,
+.theme-1 #invoice-print-view li {
+  color: #2d2219 !important;
+  text-shadow: none !important;
+}
+
+.theme-1 #estimate-body h1,
+.theme-1 #invoice-body h1,
+.theme-1 #invoice-print-view h1 {
+  color: #f7e3a2 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.76) !important;
+}
+
+.theme-1 #estimate-body h2,
+.theme-1 #invoice-body h2,
+.theme-1 #invoice-print-view h2 {
+  color: #651414 !important;
+}
+
+.theme-1 #estimate-body table th,
+.theme-1 #invoice-body table th,
+.theme-1 #invoice-print-view table th {
+  background: linear-gradient(180deg, #5d6269, #252a31) !important;
+  color: #f7e3a2 !important;
+  border-color: #aa771c !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.82) !important;
+}
+
+.theme-1 #estimate-body table,
+.theme-1 #invoice-body table,
+.theme-1 #invoice-print-view table {
+  border-color: #aa771c !important;
+  box-shadow: 0 5px 12px rgba(52, 34, 20, 0.28), inset 0 0 0 1px rgba(212, 175, 55, 0.26);
+}
+
+.theme-1 #estimate-body table td,
+.theme-1 #invoice-body table td,
+.theme-1 #invoice-print-view table td {
+  border-color: rgba(52, 34, 20, 0.35) !important;
+  background: rgba(244, 241, 234, 0.62) !important;
+}
+
+.theme-1 #estimate-body tbody tr,
+.theme-1 #invoice-body tbody tr,
+.theme-1 #invoice-print-view tbody tr {
+  background: rgba(244, 241, 234, 0.62) !important;
+}
+
+.theme-1 #estimate-body tbody tr:nth-child(even),
+.theme-1 #invoice-body tbody tr:nth-child(even),
+.theme-1 #invoice-print-view tbody tr:nth-child(even) {
+  background: rgba(226, 215, 197, 0.46) !important;
+}
+
+.theme-1 #estimate-body input,
+.theme-1 #invoice-body input,
+.theme-1 #invoice-print-view input {
+  background: rgba(255, 255, 255, 0.56) !important;
+  color: #2d2219 !important;
+  border-color: rgba(52, 34, 20, 0.42) !important;
+}
+
+.theme-1 main {
+  position: relative;
+}
+
+.theme-1 main::before {
+  content: "";
+  position: fixed;
+  inset: 64px 0 0 256px;
+  pointer-events: none;
+  opacity: 0.42;
+  background:
+    linear-gradient(115deg, transparent 0 46%, rgba(176, 196, 222, 0.09) 48%, transparent 50%),
+    repeating-linear-gradient(155deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 8px);
+  mix-blend-mode: screen;
+}
+
+.theme-1 aside img {
+  filter: drop-shadow(0 9px 13px rgba(0, 0, 0, 0.62)) saturate(1.16) contrast(1.08);
+}
+
+.theme-1 aside .rounded-2xl {
+  background:
+    radial-gradient(circle at 35% 24%, rgba(255, 255, 255, 0.38), transparent 24%),
+    linear-gradient(145deg, #f9d56a, #aa771c 48%, #5f3b10) !important;
+  border: 2px solid #d4af37 !important;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.5),
+    inset 0 2px 0 rgba(255, 239, 174, 0.7),
+    inset 0 -7px 14px rgba(62, 36, 8, 0.48) !important;
+}
+
+.theme-1 aside .border-b {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08) 25%, transparent 25%) 0 0 / 10px 10px,
+    linear-gradient(180deg, #5b0d16, #2d0509) !important;
+  border: 1px solid rgba(212, 175, 55, 0.78) !important;
+  border-radius: 12px;
+  margin: 0.5rem;
+  box-shadow:
+    0 0 14px rgba(96, 14, 24, 0.34),
+    inset 0 1px 0 rgba(255, 231, 151, 0.3),
+    inset 0 -4px 10px rgba(0, 0, 0, 0.42);
+}
+
+.theme-1 aside .border-t {
+  background: linear-gradient(180deg, rgba(15, 32, 39, 0), rgba(10, 18, 28, 0.9));
+  border-color: rgba(212, 175, 55, 0.42) !important;
+}
+
+.theme-1 aside nav {
+  scrollbar-color: #aa771c #111a24;
+}
+
+.theme-1 aside nav > div > div:hover,
+.theme-1 aside nav a:hover,
+.theme-1 header button:hover {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03)),
+    repeating-linear-gradient(155deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, #424a54, #151a20) !important;
+  border-color: rgba(212, 175, 55, 0.82) !important;
+  box-shadow:
+    0 0 12px rgba(212, 175, 55, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.5) !important;
+}
+
+.theme-1 aside nav a[class*="bg-blue-900"],
+.theme-1 aside nav a[aria-current="page"] {
+  background:
+    linear-gradient(90deg, rgba(255, 216, 96, 0.16), transparent),
+    repeating-linear-gradient(155deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, #303843, #10151b) !important;
+  border: 1px solid rgba(212, 175, 55, 0.68) !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.16), 0 0 10px rgba(212, 175, 55, 0.12);
+}
+
+.theme-1 header img {
+  filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.36)) saturate(1.18);
+}
+
+.theme-1 header button,
+.theme-1 .p-2.rounded-full {
+  background: radial-gradient(circle at 35% 24%, rgba(255, 255, 255, 0.17), transparent 28%), #222832 !important;
+  border: 1px solid rgba(176, 196, 222, 0.3) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), inset 0 -3px 8px rgba(0, 0, 0, 0.46);
+}
+
+.theme-1 header svg,
+.theme-1 aside svg {
+  color: #f8e7b0 !important;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.65));
+}
+
+.theme-1 [class*="bg-gray-50"],
+.theme-1 [class*="bg-gray-100"],
+.theme-1 [class*="bg-gray-200"],
+.theme-1 [class*="bg-blue-50"],
+.theme-1 [class*="bg-blue-100"],
+.theme-1 [class*="bg-indigo-50"],
+.theme-1 [class*="bg-indigo-100"],
+.theme-1 [class*="bg-purple-50"],
+.theme-1 [class*="bg-purple-100"],
+.theme-1 [class*="bg-pink-50"],
+.theme-1 [class*="bg-pink-100"],
+.theme-1 [class*="bg-red-50"],
+.theme-1 [class*="bg-red-100"],
+.theme-1 [class*="bg-orange-50"],
+.theme-1 [class*="bg-orange-100"],
+.theme-1 [class*="bg-yellow-50"],
+.theme-1 [class*="bg-yellow-100"],
+.theme-1 [class*="bg-green-50"],
+.theme-1 [class*="bg-green-100"],
+.theme-1 [class*="bg-emerald-50"],
+.theme-1 [class*="bg-emerald-100"],
+.theme-1 [class*="bg-teal-50"],
+.theme-1 [class*="bg-teal-100"],
+.theme-1 [class*="dark:bg-gray-800"],
+.theme-1 [class*="dark:bg-gray-900"] {
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.095), transparent 17%, rgba(255, 255, 255, 0.022) 48%, transparent 70%),
+    repeating-linear-gradient(155deg, rgba(255, 255, 255, 0.032) 0 1px, rgba(0, 0, 0, 0.052) 1px 4px, transparent 4px 10px),
+    linear-gradient(145deg, rgba(44, 51, 59, 0.96), rgba(11, 15, 20, 0.98)) !important;
+  color: #ffffff !important;
+}
+
+.theme-1 [class*="from-"],
+.theme-1 [class*="to-"] {
+  --tw-gradient-from: #3f060b var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: #741722 var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), #4f0b12 var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+
+.theme-1 [class*="bg-gradient-to"] {
+  border-color: rgba(212, 175, 55, 0.58) !important;
+}
+
+.theme-1 .space-y-6 > .bg-white,
+.theme-1 .space-y-4 > .bg-white,
+.theme-1 .space-y-2 > .bg-white,
+.theme-1 .grid > .bg-white,
+.theme-1 .grid > [class*="bg-"],
+.theme-1 .flex > [class*="bg-white"],
+.theme-1 .rounded-xl.border,
+.theme-1 .rounded-lg.border {
+  border: 1px solid rgba(212, 175, 55, 0.48) !important;
+}
+
+.theme-1 .rounded-xl.border::before,
+.theme-1 .rounded-lg.border::before {
+  border-color: rgba(255, 239, 174, 0.12);
+}
+
+.theme-1 table {
+  border-collapse: separate !important;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.5) !important;
+  border-radius: 10px;
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(255, 239, 174, 0.08);
+}
+
+.theme-1 thead,
+.theme-1 thead tr,
+.theme-1 thead th {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02)),
+    linear-gradient(180deg, #5d6269, #252a31 58%, #121820) !important;
+  color: #f7e3a2 !important;
+  border-color: rgba(212, 175, 55, 0.58) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.82);
+}
+
+.theme-1 tbody tr {
+  background: rgba(30, 37, 48, 0.66) !important;
+  color: #ffffff !important;
+}
+
+.theme-1 tbody tr:nth-child(even) {
+  background: rgba(42, 50, 64, 0.8) !important;
+}
+
+.theme-1 tbody tr:hover {
+  background:
+    linear-gradient(90deg, rgba(212, 175, 55, 0.12), rgba(96, 14, 24, 0.07)) !important;
+}
+
+.theme-1 td,
+.theme-1 th {
+  border-color: rgba(176, 196, 222, 0.22) !important;
+}
+
+.theme-1 .divide-y > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(212, 175, 55, 0.28) !important;
+}
+
+.theme-1 [class*="text-blue-"],
+.theme-1 [class*="text-indigo-"],
+.theme-1 [class*="text-purple-"],
+.theme-1 [class*="text-green-"],
+.theme-1 [class*="text-emerald-"],
+.theme-1 [class*="text-teal-"],
+.theme-1 [class*="text-cyan-"],
+.theme-1 [class*="text-orange-"],
+.theme-1 [class*="text-yellow-"] {
+  color: #f7e3a2 !important;
+}
+
+.theme-1 [class*="text-red-"],
+.theme-1 .text-brand-red {
+  color: #d6a0a3 !important;
+}
+
+.theme-1 [class*="border-blue-"],
+.theme-1 [class*="border-indigo-"],
+.theme-1 [class*="border-purple-"],
+.theme-1 [class*="border-green-"],
+.theme-1 [class*="border-emerald-"],
+.theme-1 [class*="border-teal-"],
+.theme-1 [class*="border-yellow-"],
+.theme-1 [class*="border-orange-"],
+.theme-1 [class*="border-red-"] {
+  border-color: rgba(212, 175, 55, 0.58) !important;
+}
+
+.theme-1 input:focus,
+.theme-1 select:focus,
+.theme-1 textarea:focus {
+  border-color: #d4af37 !important;
+  box-shadow:
+    0 0 0 3px rgba(96, 14, 24, 0.2),
+    0 0 16px rgba(212, 175, 55, 0.18),
+    inset 0 2px 5px rgba(0, 0, 0, 0.72) !important;
+  outline: none !important;
+}
+
+.theme-1 input[type="checkbox"],
+.theme-1 input[type="radio"] {
+  accent-color: #741722;
+  border-radius: 6px !important;
+}
+
+.theme-1 select option {
+  background: #151a20;
+  color: #ffffff;
+}
+
+.theme-1 button[disabled],
+.theme-1 input[disabled],
+.theme-1 input[readonly] {
+  opacity: 0.72;
+  background: #11161c !important;
+  color: #b0c4de !important;
+}
+
+.theme-1 .fixed.inset-0,
+.theme-1 [class*="bg-black"] {
+  background-color: rgba(2, 5, 10, 0.76) !important;
+}
+
+.theme-1 .absolute.right-0,
+.theme-1 [role="dialog"],
+.theme-1 .max-w-md,
+.theme-1 .max-w-4xl {
+  border-color: rgba(212, 175, 55, 0.5) !important;
+}
+
+.theme-1 .bg-green-600,
+.theme-1 button[class*="bg-green-600"] {
+  background: linear-gradient(180deg, #1f7a48, #0d3d25) !important;
+  border-color: #d4af37 !important;
+}
+
+.theme-1 .bg-red-600,
+.theme-1 button[class*="bg-red-600"],
+.theme-1 .bg-brand-red,
+.theme-1 button[class*="bg-brand-red"] {
+  background:
+    linear-gradient(180deg, #741722 0%, #3f060b 100%) !important;
+  border-color: #d4af37 !important;
+}
+
+.theme-1 button[class*="bg-white"],
+.theme-1 button[class*="secondary"],
+.theme-1 button:not([class*="bg-brand-red"]):not([class*="bg-red-600"]):not([class*="bg-green-600"]) {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.02)),
+    repeating-linear-gradient(155deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, #3f4650, #12171d) !important;
+  color: #ffffff !important;
+  border-color: rgba(212, 175, 55, 0.58) !important;
+}
+
+.theme-1 nav[aria-label="Tabs"] {
+  padding: 0.35rem;
+  background:
+    linear-gradient(180deg, rgba(176, 196, 222, 0.12), rgba(0, 0, 0, 0.22));
+  border: 1px solid rgba(212, 175, 55, 0.34);
+  border-radius: 999px;
+}
+
+.theme-1 nav[aria-label="Tabs"] button {
+  padding-inline: 1rem !important;
+  border: 1px solid transparent !important;
+  border-radius: 999px !important;
+  color: #b0c4de !important;
+}
+
+.theme-1 nav[aria-label="Tabs"] button[class*="text-brand-red"] {
+  background: linear-gradient(180deg, #741722, #3f060b) !important;
+  color: #ffffff !important;
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 11px rgba(96, 14, 24, 0.38), inset 0 1px 0 rgba(255, 231, 151, 0.34);
+}
+
+.theme-1 nav[aria-label="Tabs"] .bg-brand-red {
+  display: none;
+}
+
+.theme-1 .font-bold,
+.theme-1 .font-semibold {
+  letter-spacing: 0;
+}
+
+.theme-1 .text-brand-dark,
+.theme-1 .dark\:text-dark-text,
+.theme-1 .text-gray-900,
+.theme-1 .text-gray-800 {
+  color: #ffffff !important;
+}
+
+.theme-1 .bg-transparent {
+  background: rgba(42, 50, 64, 0.58) !important;
+}
+
+.theme-1 .ring-white,
+.theme-1 .dark\:ring-dark-card {
+  --tw-ring-color: rgba(212, 175, 55, 0.62) !important;
+}
+
+.theme-1 .animate-shine {
+  opacity: 0.55;
+}
+
+.theme-1 #challan-print-view {
+  background:
+    radial-gradient(circle at 20% 12%, rgba(255, 255, 255, 0.58), transparent 22%),
+    linear-gradient(135deg, rgba(137, 96, 42, 0.05) 25%, transparent 25%) 0 0 / 11px 11px,
+    #f4f1ea !important;
+  color: #2d2219 !important;
+  border: 6px solid #342214;
+  box-shadow: inset 0 0 0 3px rgba(212, 175, 55, 0.62), inset 0 0 18px rgba(52, 34, 20, 0.18);
+}
+
+.theme-1 #challan-print-view * {
+  color: #2d2219 !important;
+  text-shadow: none !important;
+}
+
+.theme-1 #challan-print-view table th {
+  color: #f7e3a2 !important;
+}
+
+.theme-1 #estimate-body,
+.theme-1 #estimate-body *,
+.theme-1 #invoice-body,
+.theme-1 #invoice-body *,
+.theme-1 #invoice-print-view,
+.theme-1 #invoice-print-view * {
+  transition: none !important;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   Theme 3: "Serene Aurora" — a calm, cinematic deep-teal skin.
+   Low-saturation teal/seafoam tones on a soft twilight gradient: easy on the
+   eyes, relaxing for the mind. Harsh reds are remapped to gentle seafoam so the
+   whole UI reads as one peaceful, immersive surface.
+   ════════════════════════════════════════════════════════════════════════ */
+.theme-3 {
+  background:
+    radial-gradient(circle at 16% -6%, rgba(110, 214, 196, 0.10), transparent 34%),
+    radial-gradient(circle at 88% 8%, rgba(150, 170, 230, 0.07), transparent 30%),
+    linear-gradient(160deg, #0c1e22 0%, #102e33 46%, #0a1920 100%);
+  color: #e7f1f0;
+}
+
+.theme-3 body {
+  background:
+    radial-gradient(circle at 18% -8%, rgba(110, 214, 196, 0.11), transparent 30%),
+    radial-gradient(circle at 86% 12%, rgba(150, 170, 230, 0.06), transparent 28%),
+    linear-gradient(160deg, #0c1e22 0%, #102e33 48%, #0a1920 100%);
+  color: #e7f1f0;
+}
+
+.theme-3 main,
+.theme-3 .bg-gray-50,
+.theme-3 .dark\:bg-dark-background {
+  background:
+    radial-gradient(circle at 50% -12%, rgba(110, 214, 196, 0.08), transparent 30%),
+    linear-gradient(160deg, #0c1e22 0%, #0f2a2f 50%, #0a1920 100%) !important;
+  color: #e7f1f0;
+}
+
+.theme-3 aside,
+.theme-3 aside > div {
+  background:
+    linear-gradient(165deg, #0b262b 0%, #103138 50%, #0b2026 100%) !important;
+  box-shadow:
+    inset -14px 0 30px rgba(0, 0, 0, 0.42),
+    inset 1px 0 0 rgba(110, 214, 196, 0.28),
+    10px 0 30px rgba(0, 0, 0, 0.34) !important;
+}
+
+.theme-3 header {
+  background:
+    linear-gradient(180deg, #0f3138 0%, #0c272d 60%, #0a1f25 100%) !important;
+  border-bottom: 1px solid rgba(110, 214, 196, 0.40) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.38), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.theme-3 header h1,
+.theme-3 h1,
+.theme-3 h2,
+.theme-3 h3,
+.theme-3 h4,
+.theme-3 label {
+  color: #eef6f4 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+.theme-3 p,
+.theme-3 span,
+.theme-3 div {
+  border-color: rgba(110, 214, 196, 0.16);
+}
+
+.theme-3 .text-gray-500,
+.theme-3 .text-gray-600,
+.theme-3 .text-gray-700,
+.theme-3 .dark\:text-dark-text-secondary {
+  color: #9bb6b1 !important;
+}
+
+.theme-3 nav a,
+.theme-3 nav button,
+.theme-3 aside nav > div > div,
+.theme-3 aside [role="button"] {
+  color: #d6e7e3 !important;
+}
+
+.theme-3 aside nav > div > div,
+.theme-3 aside nav a,
+.theme-3 aside a {
+  background:
+    linear-gradient(90deg, rgba(110, 214, 196, 0.08), rgba(110, 214, 196, 0.01)),
+    linear-gradient(180deg, #123238, #0d2227) !important;
+  border: 1px solid rgba(110, 214, 196, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.theme-3 aside nav > div > div.bg-brand-red,
+.theme-3 aside nav a.active,
+.theme-3 aside .bg-brand-red {
+  background: linear-gradient(180deg, #2f9e8d 0%, #1f6f63 100%) !important;
+  border: 1px solid rgba(127, 224, 205, 0.7) !important;
+  box-shadow:
+    0 0 16px rgba(47, 158, 141, 0.45),
+    inset 0 1px 0 rgba(190, 245, 235, 0.4) !important;
+  color: #ffffff !important;
+}
+
+.theme-3 .bg-white,
+.theme-3 .dark\:bg-dark-card,
+.theme-3 .dark\:bg-gray-800,
+.theme-3 .dark\:bg-gray-700 {
+  background:
+    linear-gradient(150deg, rgba(110, 214, 196, 0.05), transparent 40%),
+    linear-gradient(160deg, rgba(17, 42, 47, 0.96), rgba(11, 26, 31, 0.98)) !important;
+  color: #e7f1f0 !important;
+}
+
+.theme-3 .rounded-xl,
+.theme-3 .rounded-lg {
+  border-color: rgba(110, 214, 196, 0.26) !important;
+}
+
+.theme-3 .shadow-card,
+.theme-3 .dark\:shadow-dark-card,
+.theme-3 .shadow-xl,
+.theme-3 .shadow-lg {
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(110, 214, 196, 0.08) !important;
+}
+
+.theme-3 input,
+.theme-3 select,
+.theme-3 textarea {
+  background: linear-gradient(180deg, #11292e, #0c2025) !important;
+  color: #e7f1f0 !important;
+  border: 1px solid rgba(110, 214, 196, 0.34) !important;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.40) !important;
+}
+
+.theme-3 input::placeholder,
+.theme-3 textarea::placeholder {
+  color: rgba(155, 182, 177, 0.6) !important;
+}
+
+.theme-3 input:focus,
+.theme-3 select:focus,
+.theme-3 textarea:focus {
+  border-color: rgba(127, 224, 205, 0.85) !important;
+  box-shadow: 0 0 0 3px rgba(110, 214, 196, 0.18) !important;
+}
+
+.theme-3 button.bg-brand-red,
+.theme-3 button[class*="bg-brand-red"],
+.theme-3 button[class*="from-blue-600"],
+.theme-3 button[class*="bg-red-600"],
+.theme-3 .bg-brand-red {
+  background: linear-gradient(180deg, #2f9e8d 0%, #1f6f63 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(127, 224, 205, 0.55) !important;
+  box-shadow: 0 6px 18px rgba(31, 111, 99, 0.40), inset 0 1px 0 rgba(190, 245, 235, 0.35) !important;
+}
+
+.theme-3 .border-b,
+.theme-3 .border-t,
+.theme-3 .border,
+.theme-3 .dark\:border-gray-700,
+.theme-3 .dark\:border-dark-border {
+  border-color: rgba(110, 214, 196, 0.18) !important;
+}
+
+.theme-3 ol[role="list"] li [class*="rounded-full"] {
+  background: linear-gradient(145deg, #1b4248 0%, #0e272c 60%) !important;
+  border: 2px solid rgba(110, 214, 196, 0.40) !important;
+  color: #cfe9e3 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 6px 12px rgba(0, 0, 0, 0.30) !important;
+}
+
+.theme-3 ol[role="list"] li [class*="bg-brand-red"] {
+  background: linear-gradient(145deg, #2f9e8d 0%, #1f6f63 72%) !important;
+  border-color: rgba(127, 224, 205, 0.75) !important;
+  box-shadow:
+    0 0 16px rgba(47, 158, 141, 0.50),
+    inset 0 1px 0 rgba(190, 245, 235, 0.45) !important;
+  color: #ffffff !important;
+}
+
+.theme-3 ol[role="list"] .bg-brand-red {
+  background: linear-gradient(90deg, #1f6f63, #2f9e8d, #6fd6c4) !important;
+  box-shadow: 0 0 12px rgba(47, 158, 141, 0.50);
+}
+
+/* Gentle, cinematic fades for a calm, premium feel */
+.theme-3 .bg-white,
+.theme-3 button,
+.theme-3 aside nav a,
+.theme-3 aside nav > div > div {
+  transition: background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   Theme 3 · LIGHT mode — soft daylight "Serene Aurora".
+   The rules above are the DARK variant (apply when <html class="dark theme-3">).
+   These `.theme-3.light` rules have higher specificity, so they take over when
+   <html class="light theme-3">: a pale mint/aqua daylight surface with deep
+   teal text — airy and restful. The seafoam accent (buttons / active nav /
+   stepper) is shared across both modes, so it isn't redefined here.
+   ════════════════════════════════════════════════════════════════════════ */
+.theme-3.light,
+.theme-3.light body {
+  background:
+    radial-gradient(circle at 16% -6%, rgba(110, 214, 196, 0.20), transparent 36%),
+    radial-gradient(circle at 88% 8%, rgba(150, 170, 230, 0.12), transparent 32%),
+    linear-gradient(160deg, #eef7f4 0%, #e3f1ed 48%, #f4faf8 100%) !important;
+  color: #21403d !important;
+}
+
+.theme-3.light main,
+.theme-3.light .bg-gray-50,
+.theme-3.light .dark\:bg-dark-background {
+  background:
+    radial-gradient(circle at 50% -12%, rgba(110, 214, 196, 0.16), transparent 32%),
+    linear-gradient(160deg, #eef7f4 0%, #e6f2ee 50%, #f4faf8 100%) !important;
+  color: #21403d !important;
+}
+
+.theme-3.light aside,
+.theme-3.light aside > div {
+  background:
+    linear-gradient(165deg, #e6f3ef 0%, #dbeee9 50%, #e9f4f0 100%) !important;
+  box-shadow:
+    inset -14px 0 28px rgba(47, 158, 141, 0.08),
+    inset 1px 0 0 rgba(47, 158, 141, 0.20),
+    8px 0 26px rgba(31, 111, 99, 0.10) !important;
+}
+
+.theme-3.light header {
+  background: linear-gradient(180deg, #e4f2ee 0%, #f0faf7 100%) !important;
+  border-bottom: 1px solid rgba(47, 158, 141, 0.30) !important;
+  box-shadow: 0 4px 16px rgba(31, 111, 99, 0.08) !important;
+}
+
+.theme-3.light header h1,
+.theme-3.light h1,
+.theme-3.light h2,
+.theme-3.light h3,
+.theme-3.light h4,
+.theme-3.light label {
+  color: #163230 !important;
+  text-shadow: none !important;
+}
+
+.theme-3.light .text-gray-500,
+.theme-3.light .text-gray-600,
+.theme-3.light .text-gray-700,
+.theme-3.light .dark\:text-dark-text-secondary {
+  color: #5d7d77 !important;
+}
+
+.theme-3.light nav a,
+.theme-3.light nav button,
+.theme-3.light aside nav > div > div,
+.theme-3.light aside [role="button"] {
+  color: #234c47 !important;
+}
+
+.theme-3.light aside nav > div > div,
+.theme-3.light aside nav a,
+.theme-3.light aside a {
+  background: linear-gradient(180deg, #eef7f4, #e1efea) !important;
+  border: 1px solid rgba(47, 158, 141, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70);
+}
+
+.theme-3.light .bg-white,
+.theme-3.light .dark\:bg-dark-card,
+.theme-3.light .dark\:bg-gray-800,
+.theme-3.light .dark\:bg-gray-700 {
+  background:
+    linear-gradient(150deg, rgba(110, 214, 196, 0.06), transparent 42%),
+    #ffffff !important;
+  color: #21403d !important;
+}
+
+.theme-3.light .rounded-xl,
+.theme-3.light .rounded-lg {
+  border-color: rgba(47, 158, 141, 0.28) !important;
+}
+
+.theme-3.light .shadow-card,
+.theme-3.light .dark\:shadow-dark-card,
+.theme-3.light .shadow-xl,
+.theme-3.light .shadow-lg {
+  box-shadow:
+    0 12px 30px rgba(31, 111, 99, 0.12),
+    0 0 0 1px rgba(47, 158, 141, 0.08) !important;
+}
+
+.theme-3.light input,
+.theme-3.light select,
+.theme-3.light textarea {
+  background: #ffffff !important;
+  color: #21403d !important;
+  border: 1px solid rgba(47, 158, 141, 0.34) !important;
+  box-shadow: inset 0 1px 3px rgba(31, 111, 99, 0.08) !important;
+}
+
+.theme-3.light input::placeholder,
+.theme-3.light textarea::placeholder {
+  color: rgba(93, 125, 119, 0.70) !important;
+}
+
+.theme-3.light input:focus,
+.theme-3.light select:focus,
+.theme-3.light textarea:focus {
+  border-color: rgba(47, 158, 141, 0.85) !important;
+  box-shadow: 0 0 0 3px rgba(110, 214, 196, 0.25) !important;
+}
+
+.theme-3.light .border-b,
+.theme-3.light .border-t,
+.theme-3.light .border,
+.theme-3.light .dark\:border-gray-700,
+.theme-3.light .dark\:border-dark-border {
+  border-color: rgba(47, 158, 141, 0.20) !important;
+}
+
+.theme-3.light ol[role="list"] li [class*="rounded-full"] {
+  background: linear-gradient(145deg, #dbeee9 0%, #eef7f4 60%) !important;
+  border: 2px solid rgba(47, 158, 141, 0.38) !important;
+  color: #2f6f66 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.80),
+    0 5px 10px rgba(31, 111, 99, 0.10) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   Theme 4: "Evergreen" — a fresh solar-CRM skin. Clean white content with a
+   signature green→blue gradient sidebar and bright green primary accents.
+   Matches the Evergreen reference design.
+   ════════════════════════════════════════════════════════════════════════ */
+.theme-4,
+.theme-4 body {
+  background: #f4f7f9;
+  color: #1f2937;
+}
+
+.theme-4 main,
+.theme-4 .bg-gray-50,
+.theme-4 .dark\:bg-dark-background {
+  background:
+    radial-gradient(circle at 92% -6%, rgba(34, 197, 94, 0.06), transparent 30%),
+    #f4f7f9 !important;
+  color: #1f2937;
+}
+
+/* Signature sidebar — green (top) → blue (bottom) vertical gradient */
+.theme-4 aside,
+.theme-4 aside > div {
+  background: linear-gradient(180deg, #2bb673 0%, #1d9a82 42%, #1f63c4 100%) !important;
+  box-shadow: 4px 0 22px rgba(31, 99, 196, 0.18) !important;
+}
+
+/* Sidebar NAV text/icons → light (scoped to nav so white cards inside the
+   sidebar keep their own dark text and don't turn invisible) */
+.theme-4 aside nav a,
+.theme-4 aside nav button,
+.theme-4 aside nav > div > div,
+.theme-4 aside nav span,
+.theme-4 aside [role="button"] {
+  color: #eaf3ef !important;
+}
+
+/* Inactive sidebar items: transparent (sit on the gradient) */
+.theme-4 aside nav > div > div,
+.theme-4 aside nav a,
+.theme-4 aside a {
+  background: transparent !important;
+  border: 1px solid transparent;
+}
+
+/* Active sidebar item → bright green pill */
+.theme-4 aside nav > div > div.bg-brand-red,
+.theme-4 aside nav a.active,
+.theme-4 aside .bg-brand-red {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.40) !important;
+}
+
+.theme-4 header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  box-shadow: 0 1px 6px rgba(31, 41, 55, 0.06);
+}
+
+.theme-4 header h1,
+.theme-4 h1,
+.theme-4 h2,
+.theme-4 h3,
+.theme-4 h4 {
+  color: #1f2937 !important;
+  text-shadow: none !important;
+}
+
+.theme-4 label {
+  color: #374151 !important;
+}
+
+.theme-4 .text-gray-500,
+.theme-4 .text-gray-600,
+.theme-4 .text-gray-700,
+.theme-4 .dark\:text-dark-text-secondary {
+  color: #6b7280 !important;
+}
+
+/* Cards → clean white */
+.theme-4 .bg-white,
+.theme-4 .dark\:bg-dark-card,
+.theme-4 .dark\:bg-gray-800,
+.theme-4 .dark\:bg-gray-700 {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+.theme-4 .rounded-xl,
+.theme-4 .rounded-lg {
+  border-color: #e5e7eb !important;
+}
+
+.theme-4 .shadow-card,
+.theme-4 .dark\:shadow-dark-card,
+.theme-4 .shadow-xl,
+.theme-4 .shadow-lg {
+  box-shadow: 0 8px 24px rgba(31, 41, 55, 0.08) !important;
+}
+
+.theme-4 input,
+.theme-4 select,
+.theme-4 textarea {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.theme-4 input::placeholder,
+.theme-4 textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+.theme-4 input:focus,
+.theme-4 select:focus,
+.theme-4 textarea:focus {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18) !important;
+}
+
+/* Primary buttons → green */
+.theme-4 button.bg-brand-red,
+.theme-4 button[class*="bg-brand-red"],
+.theme-4 button[class*="from-blue-600"],
+.theme-4 button[class*="bg-red-600"],
+.theme-4 .bg-brand-red {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.32) !important;
+}
+
+.theme-4 .border-b,
+.theme-4 .border-t,
+.theme-4 .border,
+.theme-4 .dark\:border-gray-700,
+.theme-4 .dark\:border-dark-border {
+  border-color: #e5e7eb !important;
+}
+
+/* Stepper */
+.theme-4 ol[role="list"] li [class*="rounded-full"] {
+  background: #eef2f5 !important;
+  border: 2px solid #d1d5db !important;
+  color: #6b7280 !important;
+  box-shadow: 0 2px 6px rgba(31, 41, 55, 0.08) !important;
+}
+
+.theme-4 ol[role="list"] li [class*="bg-brand-red"] {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+  border-color: #16a34a !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.40) !important;
+}
+
+.theme-4 ol[role="list"] .bg-gray-200,
+.theme-4 ol[role="list"] .dark\:bg-gray-700 {
+  background: #e5e7eb !important;
+}
+
+.theme-4 ol[role="list"] .bg-brand-red {
+  background: linear-gradient(90deg, #16a34a, #22c55e) !important;
+}
+
+/* ── Theme 4 · DARK mode — deep "Evergreen Forest" ──────────────────────────
+   The green→blue sidebar and green accents above are shared; these override the
+   light content surfaces for a deep emerald night look in dark mode. */
+.theme-4.dark,
+.theme-4.dark body {
+  background: #0b1f1b !important;
+  color: #e6f2ec !important;
+}
+
+.theme-4.dark main,
+.theme-4.dark .bg-gray-50,
+.theme-4.dark .dark\:bg-dark-background {
+  background:
+    radial-gradient(circle at 92% -6%, rgba(34, 197, 94, 0.08), transparent 32%),
+    linear-gradient(160deg, #0b1f1b 0%, #0a1a22 100%) !important;
+  color: #e6f2ec !important;
+}
+
+.theme-4.dark header {
+  background: linear-gradient(180deg, #0f2a24 0%, #0c211c 100%) !important;
+  border-bottom: 1px solid rgba(34, 197, 94, 0.30) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.theme-4.dark header h1,
+.theme-4.dark h1,
+.theme-4.dark h2,
+.theme-4.dark h3,
+.theme-4.dark h4 {
+  color: #eaf6f0 !important;
+}
+
+.theme-4.dark label {
+  color: #cfe6dc !important;
+}
+
+.theme-4.dark .text-gray-500,
+.theme-4.dark .text-gray-600,
+.theme-4.dark .text-gray-700,
+.theme-4.dark .dark\:text-dark-text-secondary {
+  color: #9fb8af !important;
+}
+
+.theme-4.dark .bg-white,
+.theme-4.dark .dark\:bg-dark-card,
+.theme-4.dark .dark\:bg-gray-800,
+.theme-4.dark .dark\:bg-gray-700 {
+  background: linear-gradient(160deg, #11241f, #0d1d18) !important;
+  color: #e6f2ec !important;
+}
+
+.theme-4.dark .rounded-xl,
+.theme-4.dark .rounded-lg,
+.theme-4.dark .border-b,
+.theme-4.dark .border-t,
+.theme-4.dark .border,
+.theme-4.dark .dark\:border-gray-700,
+.theme-4.dark .dark\:border-dark-border {
+  border-color: rgba(34, 197, 94, 0.20) !important;
+}
+
+.theme-4.dark .shadow-card,
+.theme-4.dark .dark\:shadow-dark-card,
+.theme-4.dark .shadow-xl,
+.theme-4.dark .shadow-lg {
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(34, 197, 94, 0.08) !important;
+}
+
+.theme-4.dark input,
+.theme-4.dark select,
+.theme-4.dark textarea {
+  background: #0e211c !important;
+  color: #e6f2ec !important;
+  border: 1px solid rgba(34, 197, 94, 0.28) !important;
+}
+
+.theme-4.dark input::placeholder,
+.theme-4.dark textarea::placeholder {
+  color: rgba(159, 184, 175, 0.65) !important;
+}

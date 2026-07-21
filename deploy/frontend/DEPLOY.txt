@@ -1,0 +1,10 @@
+Malwa CRM Frontend — upload these files to Hostinger
+
+Target: crm.malwatrolley.com document root
+API expected at: https://crm.malwatrolley.com/api
+
+Steps:
+1. File Manager → open subdomain folder (or public_html)
+2. Upload ALL files from this folder (index.html, assets/, .htaccess, …)
+3. Ensure .htaccess is uploaded (enable "Show hidden files")
+4. Open https://crm.malwatrolley.com
