@@ -1,14 +1,10 @@
-# Apache / LiteSpeed (Hostinger) — API bridge + SPA fallback
+# Fresh SPA only — API goes direct to Docker VPS (no PHP bridge)
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
 
-  # /api/* → PHP bridge → Docker backend :8010 (do NOT serve SPA HTML)
-  RewriteRule ^api/?$ api-bridge.php?__path= [QSA,L]
-  RewriteRule ^api/(.*)$ api-bridge.php?__path=$1 [QSA,L]
-
-  # Never rewrite real static files to index.html (avoids JS MIME text/html errors)
-  RewriteRule \.(?:js|mjs|css|map|wasm|json|png|jpe?g|gif|svg|ico|webp|woff2?|ttf|eot|txt|php)$ - [L]
+  # Do not rewrite static assets
+  RewriteRule \.(?:js|mjs|css|map|wasm|json|png|jpe?g|gif|svg|ico|webp|woff2?|ttf|eot|txt)$ - [L]
 
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f

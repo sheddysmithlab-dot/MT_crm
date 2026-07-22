@@ -22,13 +22,20 @@ class BackendMigrationManager {
    * Initialize complete backend migration
    */
   async initialize() {
+    // Web / browser: skip legacy C:/malwa-crm file migration entirely
+    const isElectron = typeof window !== 'undefined' && !!window.electron?.isElectron;
+    if (!isElectron) {
+      this.isInitialized = true;
+      return { success: true, message: 'Skipped — web API mode (no C:/malwa-crm)' };
+    }
+
     if (this.isInitialized) {
       console.log('📦 Backend migration already initialized');
       return { success: true, message: 'Already initialized' };
     }
 
     try {
-      console.log('🚀 Starting backend migration to C:/malwa-crm/Data_base structure...');
+      console.log('🚀 Starting desktop file migration (Electron only)...');
 
       // Step 1: Initialize path configuration
       await this.initializePathConfig();
@@ -292,26 +299,19 @@ class BackendMigrationManager {
 // Create singleton instance
 export const backendMigrationManager = new BackendMigrationManager();
 
-// Auto-initialize when environment is ready
-if (typeof window !== 'undefined') {
-  // Initialize after DOM is ready
+// Electron desktop only — web never auto-runs C:/malwa-crm migration
+if (typeof window !== 'undefined' && window.electron?.isElectron) {
+  const boot = async () => {
+    try {
+      await backendMigrationManager.initialize();
+    } catch (error) {
+      console.error('Desktop migration failed:', error);
+    }
+  };
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', async () => {
-      try {
-        await backendMigrationManager.initialize();
-      } catch (error) {
-        console.error('Auto-initialization failed:', error);
-      }
-    });
+    document.addEventListener('DOMContentLoaded', boot);
   } else {
-    // DOM is already ready
-    setTimeout(async () => {
-      try {
-        await backendMigrationManager.initialize();
-      } catch (error) {
-        console.error('Auto-initialization failed:', error);
-      }
-    }, 100);
+    setTimeout(boot, 100);
   }
 }
 

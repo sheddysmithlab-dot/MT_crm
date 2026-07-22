@@ -1,15 +1,12 @@
-Malwa CRM Frontend — upload these files to Hostinger
+Malwa CRM Frontend — FRESH upload to Hostinger File Manager
 
 Target: crm.malwatrolley.com document root
-API expected at: https://crm.malwatrolley.com/api
+API (direct): http://200.97.171.119:8010/api
 
-Required for API login:
-- .htaccess  (routes /api → api-bridge.php)
-- api-bridge.php
-- api-backend.txt  (default http://127.0.0.1:8010)
+1. DELETE old files in document root (index, assets, api-bridge*, api-backend*)
+2. Upload ALL files from this folder
+3. Show hidden files → ensure .htaccess uploaded
+4. Hard refresh browser
+5. Login: admin@malwatrolley.com / Malwa#8224
 
-Steps:
-1. File Manager → crm.malwatrolley.com document root
-2. Upload ALL files (overwrite). Show hidden files for .htaccess
-3. Test: https://crm.malwatrolley.com/api/health/live → JSON alive
-4. Login: admin@malwatrolley.com / Malwa#8224
+No PHP api-bridge needed — SPA calls Docker API directly.

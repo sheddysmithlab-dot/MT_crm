@@ -237,8 +237,7 @@ function App() {
       
       try {        
         // Enhanced unified sync manager already initialized in main database setup
-        console.log('✅ Database system ready with enhanced operations');
-        console.log('📁 File structure: C:/malwa-crm/Data_base/');
+        console.log('✅ Database system ready (web API / IndexedDB cache)');
         
       } catch (error) {
         console.error('Failed to initialize enhanced database:', error);
