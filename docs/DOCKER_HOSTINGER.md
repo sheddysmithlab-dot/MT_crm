@@ -23,17 +23,30 @@ API: `http://VPS_IP:8010/api/health/live`
 ## Environment (Hostinger Compose → Environment / Variables)
 
 ```
-DATABASE_URL=mysql+pymysql://u808821982_Malwa_crm:YOUR_PASSWORD@host.docker.internal:3306/u808821982_Malwa_crm?charset=utf8mb4
+DATABASE_URL=mysql+pymysql://u808821982_Malwa_crm:YOUR_PASSWORD@HPANEL_MYSQL_HOST:3306/u808821982_Malwa_crm?charset=utf8mb4
 JWT_SECRET=long-random-secret-here
 CORS_ORIGINS=https://crm.malwatrolley.com
+SEED_ADMIN_EMAIL=admin@malwatrolley.com
+SEED_ADMIN_PASSWORD=Malwa#8224
 MTCRM_API_PORT=8010
 ```
 
-Agar MySQL connect na ho:
+### MySQL host — fix "Connection refused" on host.docker.internal
 
-- `host.docker.internal` ki jagah hPanel ka MySQL **hostname** try karo
-- Ya VPS ka private IP
-- phpMyAdmin se confirm karo user remote/docker se allow hai
+Your DB is **hPanel MySQL**, not Docker MySQL.
+
+1. hPanel → **Databases** → copy **MySQL hostname** (phpMyAdmin me bhi dikhta hai)
+2. hPanel → **Remote MySQL** → Allow: `200.97.171.119`
+3. `DATABASE_URL` me `host.docker.internal` hatao, woh hostname lagao
+
+Wrong:
+`...@host.docker.internal:3306/...`
+
+Right example:
+`...@srv1234.hstgr.io:3306/...`  (exact host tumhare panel ka)
+
+Agar MySQL hostname nahi milta / remote allow nahi hota, use:
+`docker-compose.mysql.yml` (DB Docker ke andar — alag empty DB).
 
 ## After deploy
 

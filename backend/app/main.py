@@ -30,8 +30,11 @@ app.include_router(api_router, prefix=settings.API_PREFIX)
 
 @app.on_event("startup")
 def on_startup():
-    """Create tables if they do not exist (dev bootstrap). Prefer Alembic in prod."""
-    Base.metadata.create_all(bind=engine)
+    """Best-effort table ensure — never block API boot if MySQL is down/misconfigured."""
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as exc:  # noqa: BLE001 — startup must not crash the container
+        print(f"[mt-crm] startup create_all skipped: {exc}")
 
 
 @app.get("/")
