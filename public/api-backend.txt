@@ -1,2 +1,1 @@
-# Hostinger VPS Docker API
 http://200.97.171.119:8010
