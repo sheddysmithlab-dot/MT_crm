@@ -1,2 +1,10 @@
-# One line: Docker API base URL (no /api suffix). Default if blank/missing: http://127.0.0.1:8010
+# Put your Hostinger VPS PUBLIC IP here (File Manager ≠ Docker localhost).
+# Example:
+# http://123.45.67.89:8010
+#
+# Find IP: Hostinger hPanel → VPS → Overview → IP address
+# Also open firewall TCP 8010, and confirm:
+#   http://YOUR_IP:8010/api/health/live
+#
+# Leave wrong 127.0.0.1 only if PHP and Docker are on THE SAME VPS.
 http://127.0.0.1:8010

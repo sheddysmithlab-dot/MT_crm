@@ -1,20 +1,79 @@
 <?php
 /**
- * Same-origin /api bridge for Hostinger File Manager → Docker backend.
- * Frontend calls https://crm.malwatrolley.com/api/... ; this proxies to Docker :8010.
+ * Same-origin /api bridge: crm.malwatrolley.com/api → Docker FastAPI.
  *
- * Edit api-backend.txt if Docker is not on 127.0.0.1:8010 (one line, e.g. http://10.0.0.1:8010).
+ * Hostinger File Manager PHP and Docker VPS are often DIFFERENT machines.
+ * Do NOT use 127.0.0.1 unless both run on the same VPS.
+ *
+ * Set backend in api-backend.txt (one URL per line, first reachable wins):
+ *   http://YOUR_VPS_PUBLIC_IP:8010
  */
 declare(strict_types=1);
 
-$configFile = __DIR__ . '/api-backend.txt';
-$backend = 'http://127.0.0.1:8010';
-if (is_readable($configFile)) {
-    $line = trim((string) file_get_contents($configFile));
-    if ($line !== '' && !str_starts_with($line, '#')) {
-        $backend = rtrim($line, '/');
+function mt_crm_backends(): array
+{
+    $defaults = [
+        'http://127.0.0.1:8010',
+        'http://172.17.0.1:8010', // Docker bridge on same Linux host
+    ];
+    $configFile = __DIR__ . '/api-backend.txt';
+    $list = [];
+    if (is_readable($configFile)) {
+        foreach (file($configFile, FILE_IGNORE_NEW_LINES) as $line) {
+            $line = trim($line);
+            if ($line === '' || str_starts_with($line, '#')) {
+                continue;
+            }
+            $list[] = rtrim($line, '/');
+        }
     }
+    return array_values(array_unique(array_merge($list, $defaults)));
 }
+
+function mt_crm_pick_backend(array $backends): array
+{
+    $errors = [];
+    foreach ($backends as $base) {
+        $probe = $base . '/api/health/live';
+        $ch = curl_init($probe);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 2,
+            CURLOPT_TIMEOUT => 4,
+            CURLOPT_HTTPHEADER => ['Accept: application/json'],
+        ]);
+        $body = curl_exec($ch);
+        $code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $err = curl_error($ch);
+        curl_close($ch);
+        if ($body !== false && $code >= 200 && $code < 500) {
+            return ['ok' => true, 'backend' => $base, 'probe' => $body, 'errors' => $errors];
+        }
+        $errors[] = $base . ' → ' . ($err !== '' ? $err : ('HTTP ' . $code));
+    }
+    return ['ok' => false, 'backend' => null, 'probe' => null, 'errors' => $errors];
+}
+
+$backends = mt_crm_backends();
+$pick = mt_crm_pick_backend($backends);
+if (!$pick['ok']) {
+    http_response_code(502);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'detail' => 'API bridge cannot reach Docker backend',
+        'tried' => $pick['errors'],
+        'fix' => [
+            '1' => 'Hostinger → VPS → copy Public IP',
+            '2' => 'Docker Compose: confirm mt_crm_api running, port 8010 published',
+            '3' => 'VPS firewall / Hostinger Firewall: allow inbound TCP 8010',
+            '4' => 'Edit api-backend.txt to ONE line: http://YOUR_VPS_IP:8010',
+            '5' => 'Test in browser: http://YOUR_VPS_IP:8010/api/health/live',
+        ],
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
+$backend = $pick['backend'];
 
 $path = isset($_GET['__path']) ? (string) $_GET['__path'] : '';
 $path = ltrim(str_replace(['..', "\0"], '', $path), '/');
@@ -71,9 +130,8 @@ if ($response === false) {
     http_response_code(502);
     header('Content-Type: application/json');
     echo json_encode([
-        'detail' => 'API bridge cannot reach Docker backend at ' . $backend,
+        'detail' => 'API bridge proxy failed for ' . $backend,
         'error' => $err,
-        'hint' => 'Confirm mt_crm_api is running on port 8010, or put the correct base URL in api-backend.txt',
     ]);
     exit;
 }
