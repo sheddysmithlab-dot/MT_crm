@@ -20,5 +20,7 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
   },
-  base: './',
+  // Absolute base so /login, /dashboard etc. still load /assets/*.js
+  // (relative './assets' breaks on Hostinger SPA routes → MIME text/html error)
+  base: '/',
 });

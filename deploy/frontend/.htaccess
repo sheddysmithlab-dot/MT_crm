@@ -7,10 +7,18 @@
   RewriteRule ^api/?$ api-bridge.php?__path= [QSA,L]
   RewriteRule ^api/(.*)$ api-bridge.php?__path=$1 [QSA,L]
 
+  # Never rewrite real static files to index.html (avoids JS MIME text/html errors)
+  RewriteRule \.(?:js|mjs|css|map|wasm|json|png|jpe?g|gif|svg|ico|webp|woff2?|ttf|eot|txt|php)$ - [L]
+
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
+</IfModule>
+
+<IfModule mod_mime.c>
+  AddType application/javascript .js .mjs
+  AddType text/css .css
 </IfModule>
 
 <IfModule mod_authz_core.c>
