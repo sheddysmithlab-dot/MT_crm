@@ -1,0 +1,82 @@
+# Malwa CRM — Docker Compose (Hostinger VPS / any Docker host)
+#
+# Usage:
+#   1. cp .env.docker.example .env.docker
+#   2. Edit .env.docker (DB password, JWT_SECRET, domain)
+#   3. docker compose --env-file .env.docker up -d --build
+#
+# App:  http://SERVER_IP  or https://crm.malwatrolley.com (after DNS + SSL)
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: malwa_crm_api
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    environment:
+      APP_ENV: production
+      DEBUG: "false"
+      API_PREFIX: /api
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    expose:
+      - "8000"
+    networks:
+      - malwa_net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api}
+        VITE_USE_API: "true"
+    container_name: malwa_crm_web
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - malwa_net
+
+  # Optional local MySQL (comment out if using Hostinger hPanel MySQL)
+  # Uncomment the block below OR use EXTERNAL DATABASE_URL in .env.docker
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: malwa_crm_mysql
+  #   restart: unless-stopped
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+  #     MYSQL_DATABASE: ${MYSQL_DATABASE:-malwa_crm}
+  #     MYSQL_USER: ${MYSQL_USER:-crm_user}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD:-changeme}
+  #   volumes:
+  #     - malwa_mysql_data:/var/lib/mysql
+  #     - ./backend/sql/malwa_crm_Data_base.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+  #   ports:
+  #     - "3306:3306"
+  #   networks:
+  #     - malwa_net
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p${MYSQL_ROOT_PASSWORD:-rootpass}"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 10
+
+networks:
+  malwa_net:
+    driver: bridge
+
+# volumes:
+#   malwa_mysql_data:
