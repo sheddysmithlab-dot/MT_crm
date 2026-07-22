@@ -208,6 +208,17 @@ TYPED_STORES = frozenset(
         "products",
         "users",
         "profiles",
+        "inspections",
+        "estimates",
+        "jobsheets",
+        "invoices",
+        "challan",
+        "challans",
+        "sellchallan",
+        "sell_challans",
+        "cash_receipts",
+        "customer_ledger_entries",
+        "daily_tasks",
     }
 )
 

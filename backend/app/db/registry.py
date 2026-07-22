@@ -38,6 +38,17 @@ from app.db.models_extra import (
     Voucher,
     Product,
 )
+from app.db.models_jobflow import (
+    Inspection,
+    Estimate,
+    Jobsheet,
+    Invoice,
+    Challan,
+    SellChallan,
+    CashReceipt,
+    CustomerLedgerEntry,
+    DailyTask,
+)
 
 # Start with typed models
 RESOURCE_MODELS: dict[str, type] = {
@@ -54,6 +65,17 @@ RESOURCE_MODELS: dict[str, type] = {
     "products": Product,
     "users": User,
     "profiles": Profile,
+    "inspections": Inspection,
+    "estimates": Estimate,
+    "jobsheets": Jobsheet,
+    "invoices": Invoice,
+    "challan": Challan,
+    "challans": Challan,
+    "sellchallan": SellChallan,
+    "sell_challans": SellChallan,
+    "cash_receipts": CashReceipt,
+    "customer_ledger_entries": CustomerLedgerEntry,
+    "daily_tasks": DailyTask,
 }
 
 SEARCH_FIELDS: dict[str, list[str]] = {
@@ -68,12 +90,18 @@ SEARCH_FIELDS: dict[str, list[str]] = {
     "purchases": ["invoice_no", "supplier_name", "status"],
     "vouchers": ["voucher_no", "voucher_type", "payee_name"],
     "products": ["name", "code", "category"],
-    "inspections": ["status", "vehicle_no", "party_name"],
-    "estimates": ["estimate_no", "status", "vehicle_no"],
-    "jobsheets": ["status"],
-    "invoices": ["invoice_no", "status"],
+    "inspections": ["status", "vehicle_no", "party_name", "date"],
+    "estimates": ["estimate_no", "status", "vehicle_no", "party_name", "date"],
+    "jobsheets": ["job_no", "status", "vehicle_no", "party_name", "date"],
+    "invoices": ["invoice_no", "status", "vehicle_no", "party_name", "date"],
+    "challan": ["challan_no", "status", "vehicle_no", "party_name", "date"],
+    "challans": ["challan_no", "status", "vehicle_no", "party_name", "date"],
+    "sellchallan": ["challan_no", "status", "vehicle_no", "party_name", "date"],
+    "sell_challans": ["challan_no", "status", "vehicle_no", "party_name", "date"],
+    "cash_receipts": ["receipt_no", "customer_name", "party_name", "vehicle_no", "date"],
+    "customer_ledger_entries": ["customer_name", "particular", "vehicle_no", "date"],
     "accounts": ["code", "name", "type"],
-    "daily_tasks": ["status"],
+    "daily_tasks": ["status", "title", "date"],
 }
 
 

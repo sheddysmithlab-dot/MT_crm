@@ -52,15 +52,20 @@ PY
   sleep 3
 done
 
-# Try create tables; never block API start
-python - <<'PY' || echo "[mt-crm] create_all skipped/failed — API will still start"
+# Try create tables / add missing columns; never block API start
+python - <<'PY' || echo "[mt-crm] migrate/create_all skipped/failed — API will still start"
 from app.db.session import engine, Base
-from app.db import models, models_extra, registry  # noqa: F401
+from app.db import models, models_extra, models_jobflow, registry  # noqa: F401
+from scripts.migrate_add_columns import main as migrate_main
 try:
-    Base.metadata.create_all(bind=engine)
-    print("[mt-crm] tables ensured")
+    migrate_main()
 except Exception as e:
-    print("[mt-crm] create_all error:", e)
+    print("[mt-crm] migrate error:", e)
+    try:
+        Base.metadata.create_all(bind=engine)
+        print("[mt-crm] tables ensured via create_all")
+    except Exception as e2:
+        print("[mt-crm] create_all error:", e2)
 PY
 
 # Auto-seed Super Admin (idempotent)

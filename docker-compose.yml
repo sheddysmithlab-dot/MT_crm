@@ -42,7 +42,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: mt-crm-api:fresh-20260722
+    image: mt-crm-api:fresh-20260722-cols
     container_name: mt_crm_api
     restart: unless-stopped
     depends_on:
@@ -55,7 +55,7 @@ services:
       APP_ENV: production
       DEBUG: "false"
       API_PREFIX: /api
-      BUILD_ID: fresh-20260722
+      BUILD_ID: fresh-20260722-cols
       FORCE_DOCKER_MYSQL: "1"
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-mtcrm_pass_change_me}
       DATABASE_URL: mysql+pymysql://mtcrm:${MYSQL_PASSWORD:-mtcrm_pass_change_me}@mt_crm_mysql:3306/malwa_crm?charset=utf8mb4

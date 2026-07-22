@@ -7,6 +7,7 @@ from app.api.router import api_router
 from app.db.session import engine, Base
 from app.db import models  # noqa: F401
 from app.db import models_extra  # noqa: F401
+from app.db import models_jobflow  # noqa: F401
 from app.db import registry  # noqa: F401 — all architecture stores
 
 app = FastAPI(
