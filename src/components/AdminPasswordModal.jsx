@@ -4,6 +4,8 @@ import Button from "./ui/Button";
 import { Lock } from "lucide-react";
 import { toast } from "sonner";
 import { useAuthStore } from '@/store/authManagementStore';
+import { isApiModeEnabled } from '@/api/client';
+import { apiLogin } from '@/api/auth';
 
 const AdminPasswordModal = ({ isOpen, onSuccess, onCancel }) => {
   const [password, setPassword] = useState("");
@@ -16,27 +18,38 @@ const AdminPasswordModal = ({ isOpen, onSuccess, onCancel }) => {
       return;
     }
 
+    if (!user?.email) {
+      toast.error("User not authenticated");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      if (!user) {
-        toast.error("User not authenticated");
-        setLoading(false);
+      // Web API mode: re-check against server with same login password
+      if (isApiModeEnabled()) {
+        await apiLogin(user.email, password);
+        toast.success("Access granted");
+        setPassword("");
+        onSuccess();
         return;
       }
 
+      // Legacy desktop fallbacks
       const validCredentials = [
         { email: 'malwatrolley@gmail.com', password: 'Malwa822' },
-        { email: 'Shahidmultaniii', password: 'S#d_8224' }
+        { email: 'Shahidmultaniii', password: 'S#d_8224' },
+        { email: 'admin@malwatrolley.com', password: 'Malwa#8224' },
       ];
 
       const isValid = validCredentials.some(
-        cred => cred.email === user.email && cred.password === password
+        (cred) =>
+          cred.email.toLowerCase() === String(user.email).toLowerCase() &&
+          cred.password === password
       );
 
       if (!isValid) {
         toast.error("Invalid password");
-        setLoading(false);
         return;
       }
 
@@ -45,7 +58,7 @@ const AdminPasswordModal = ({ isOpen, onSuccess, onCancel }) => {
       onSuccess();
     } catch (error) {
       console.error("Password verification error:", error);
-      toast.error("Verification failed");
+      toast.error(error?.message || "Invalid password");
     } finally {
       setLoading(false);
     }
@@ -74,8 +87,8 @@ const AdminPasswordModal = ({ isOpen, onSuccess, onCancel }) => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleVerify()}
-            placeholder="Enter your password"
+            onKeyDown={(e) => e.key === "Enter" && handleVerify()}
+            placeholder="Enter your login password"
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-red-500 focus:border-transparent"
             autoFocus
           />
