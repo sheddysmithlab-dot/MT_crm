@@ -65,8 +65,9 @@ server {
     root /var/www/malwa-crm/dist;
     index index.html;
 
+    # Docker backend-only Compose maps host 8010 → container 8000
     location /api/ {
-        proxy_pass http://127.0.0.1:8000/api/;
+        proxy_pass http://127.0.0.1:8010/api/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

@@ -43,11 +43,41 @@ http://YOUR_VPS_IP:8010/api/health        → database ok/error
 http://YOUR_VPS_IP:8010/api/docs
 ```
 
-Seed admin (one time), Hostinger terminal / SSH:
+### Critical: frontend → API proxy
+
+Built SPA uses `VITE_API_URL=https://crm.malwatrolley.com/api`.  
+Docker API listens on **VPS port 8010**. Without Nginx proxy, login returns HTML and fails with `Cannot read properties of undefined (reading 'id')`.
+
+Nginx (same VPS):
+
+```nginx
+location /api/ {
+    proxy_pass http://127.0.0.1:8010/api/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+Quick test in browser: `https://crm.malwatrolley.com/api/health/live` must show JSON `{"status":"alive"}` — not the login page HTML.
+
+### Seed admin (one time)
+
+Hostinger Compose env me bhi set karo:
+
+```
+SEED_ADMIN_EMAIL=admin@malwatrolley.com
+SEED_ADMIN_PASSWORD=Malwa#8224
+```
+
+Phir:
 
 ```bash
 docker exec -it mt_crm_api python -m scripts.seed_admin
 ```
+
+Login: `admin@malwatrolley.com` / `Malwa#8224` (sirf seed ke baad).
 
 ## Why previous deploy failed
 

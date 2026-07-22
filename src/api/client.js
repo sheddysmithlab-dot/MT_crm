@@ -72,13 +72,24 @@ export async function apiRequest(path, options = {}) {
   }
 
   const text = await response.text();
+  const contentType = response.headers.get('content-type') || '';
+  const looksLikeHtml =
+    /^\s*</.test(text) || contentType.includes('text/html');
+
   let data = null;
-  if (text) {
+  if (text && !looksLikeHtml) {
     try {
       data = JSON.parse(text);
     } catch {
-      data = { detail: text };
+      data = null;
     }
+  }
+
+  if (looksLikeHtml || (response.ok && text && data === null)) {
+    throw new ApiError(
+      `API not reachable at ${url}. Frontend is calling ${getApiBaseUrl()} but Docker backend may be on :8010 — set Nginx proxy /api → 127.0.0.1:8010 or rebuild with correct VITE_API_URL.`,
+      { status: response.status || 0, detail: 'html_instead_of_json' }
+    );
   }
 
   if (!response.ok) {

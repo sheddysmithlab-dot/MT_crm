@@ -81,7 +81,13 @@ const useAuthManagementStore = create(
       set({ authLoading: true });
       try {
         const data = await apiLogin(email, password);
-        const user = data.user;
+        const user = data?.user;
+        if (!user?.id) {
+          throw new Error(
+            data?.detail ||
+              'Login response missing user. Check VITE_API_URL / Nginx /api proxy to Docker :8010.'
+          );
+        }
         const profile = data.profile || {
           id: user.id,
           name: user.name || user.email,

@@ -18,4 +18,14 @@ except Exception as e:
     print("[mt-crm] create_all error:", e)
 PY
 
+# Auto-seed Super Admin (idempotent). Set SEED_ADMIN_PASSWORD in Hostinger env.
+python - <<'PY' || echo "[mt-crm] seed_admin skipped/failed — API will still start"
+import os
+from scripts.seed_admin import main
+try:
+    main()
+except Exception as e:
+    print("[mt-crm] seed_admin error:", e)
+PY
+
 exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1

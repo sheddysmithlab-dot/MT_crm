@@ -40,7 +40,7 @@ services:
       JWT_EXPIRE_MINUTES: ${JWT_EXPIRE_MINUTES:-10080}
       CORS_ORIGINS: ${CORS_ORIGINS:-https://crm.malwatrolley.com}
       SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@malwatrolley.com}
-      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-ChangeMe822!}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-Malwa#8224}
       SEED_ADMIN_NAME: ${SEED_ADMIN_NAME:-Malwa Admin}
     extra_hosts:
       - "host.docker.internal:host-gateway"

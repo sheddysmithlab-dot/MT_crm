@@ -25,7 +25,22 @@ def main():
         email = settings.SEED_ADMIN_EMAIL.strip()
         existing = db.query(User).filter(User.email == email, User.deleted_at.is_(None)).first()
         if existing:
-            print(f"Admin already exists: {email} (id={existing.id})")
+            # Keep password in sync with SEED_ADMIN_PASSWORD when re-deploying
+            existing.password = hash_password(settings.SEED_ADMIN_PASSWORD)
+            existing.name = settings.SEED_ADMIN_NAME
+            existing.role = "Super Admin"
+            existing.status = "active"
+            existing.updated_at = datetime.utcnow()
+            profile = db.get(Profile, existing.id) or (
+                db.query(Profile).filter(Profile.user_id == existing.id).first()
+            )
+            if profile:
+                profile.role = "Super Admin"
+                profile.status = "active"
+                profile.permissions = ["*"]
+                profile.updated_at = datetime.utcnow()
+            db.commit()
+            print(f"Admin already exists — password refreshed: {email} (id={existing.id})")
             return
 
         user_id = str(uuid.uuid4())

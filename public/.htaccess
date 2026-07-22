@@ -1,14 +1,18 @@
-# Apache (Hostinger) — SPA fallback for React Router
+# Apache / LiteSpeed (Hostinger) — API bridge + SPA fallback
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # /api/* → PHP bridge → Docker backend :8010 (do NOT serve SPA HTML)
+  RewriteRule ^api/?$ api-bridge.php?__path= [QSA,L]
+  RewriteRule ^api/(.*)$ api-bridge.php?__path=$1 [QSA,L]
+
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
 </IfModule>
 
-# Optional: block access to hidden files
 <IfModule mod_authz_core.c>
   Require all granted
 </IfModule>
