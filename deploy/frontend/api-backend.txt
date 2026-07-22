@@ -1,0 +1,2 @@
+# One line: Docker API base URL (no /api suffix). Default if blank/missing: http://127.0.0.1:8010
+http://127.0.0.1:8010

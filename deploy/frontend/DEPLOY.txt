@@ -3,8 +3,13 @@ Malwa CRM Frontend — upload these files to Hostinger
 Target: crm.malwatrolley.com document root
 API expected at: https://crm.malwatrolley.com/api
 
+Required for API login:
+- .htaccess  (routes /api → api-bridge.php)
+- api-bridge.php
+- api-backend.txt  (default http://127.0.0.1:8010)
+
 Steps:
-1. File Manager → open subdomain folder (or public_html)
-2. Upload ALL files from this folder (index.html, assets/, .htaccess, …)
-3. Ensure .htaccess is uploaded (enable "Show hidden files")
-4. Open https://crm.malwatrolley.com
+1. File Manager → crm.malwatrolley.com document root
+2. Upload ALL files (overwrite). Show hidden files for .htaccess
+3. Test: https://crm.malwatrolley.com/api/health/live → JSON alive
+4. Login: admin@malwatrolley.com / Malwa#8224
