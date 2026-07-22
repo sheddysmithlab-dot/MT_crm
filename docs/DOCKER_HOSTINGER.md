@@ -1,29 +1,26 @@
-# Docker — Hostinger Compose (BACKEND ONLY)
+# Docker — Hostinger Compose (BACKEND + own MySQL)
 
-## Paste this URL in Hostinger Compose
+## Paste this URL
 
 ```
 https://raw.githubusercontent.com/sheddysmithlab-dot/MT_crm/main/docker-compose.yml
 ```
 
-**Project name:** `mt-crm-api` (unique — other Docker apps untouched)
+Project name: `mt-crm-api`
 
-## What it deploys
+## Critical (your current crash)
 
-| Item | Value |
-|------|--------|
-| Service | backend only (no frontend) |
-| Container | `mt_crm_api` |
-| Network | `mt_crm_net` (isolated) |
-| Port on VPS | **8010** → container 8000 |
-
-Frontend alag File Manager / `deploy/frontend` se upload karo.  
-API: `http://VPS_IP:8010/api/health/live`
-
-## Environment (Hostinger Compose → Environment / Variables)
+Hostinger Environment se **DELETE** karo:
 
 ```
-DATABASE_URL=mysql+pymysql://u808821982_Malwa_crm:YOUR_PASSWORD@HPANEL_MYSQL_HOST:3306/u808821982_Malwa_crm?charset=utf8mb4
+DATABASE_URL=...@host.docker.internal...
+```
+
+Wo value API crash karti hai. Is compose me MySQL **khud Docker ke andar** hai (`mt_crm_mysql`) — Solar CRM / dusre projects touch nahi hote.
+
+## Environment (sirf ye rakho)
+
+```
 JWT_SECRET=long-random-secret-here
 CORS_ORIGINS=https://crm.malwatrolley.com
 SEED_ADMIN_EMAIL=admin@malwatrolley.com
@@ -31,73 +28,27 @@ SEED_ADMIN_PASSWORD=Malwa#8224
 MTCRM_API_PORT=8010
 ```
 
-### MySQL host — fix "Connection refused" on host.docker.internal
+Phir **Redeploy / Rebuild** (naya image `mt-crm-api:20260722b`).
 
-Your DB is **hPanel MySQL**, not Docker MySQL.
+## Firewall
 
-1. hPanel → **Databases** → copy **MySQL hostname** (phpMyAdmin me bhi dikhta hai)
-2. hPanel → **Remote MySQL** → Allow: `200.97.171.119`
-3. `DATABASE_URL` me `host.docker.internal` hatao, woh hostname lagao
+VPS firewall me TCP **8010** allow.
 
-Wrong:
-`...@host.docker.internal:3306/...`
-
-Right example:
-`...@srv1234.hstgr.io:3306/...`  (exact host tumhare panel ka)
-
-Agar MySQL hostname nahi milta / remote allow nahi hota, use:
-`docker-compose.mysql.yml` (DB Docker ke andar — alag empty DB).
-
-## After deploy
+## Check
 
 ```
-http://YOUR_VPS_IP:8010/api/health/live   → {"status":"alive"}
-http://YOUR_VPS_IP:8010/api/health        → database ok/error
-http://YOUR_VPS_IP:8010/api/docs
+http://200.97.171.119:8010/api/health/live
+http://200.97.171.119:8010/api/health
+https://crm.malwatrolley.com/api/health/live
 ```
 
-### Critical: frontend → API proxy
+Login: `admin@malwatrolley.com` / `Malwa#8224`
 
-Built SPA uses `VITE_API_URL=https://crm.malwatrolley.com/api`.  
-Docker API listens on **VPS port 8010**. Without Nginx proxy, login returns HTML and fails with `Cannot read properties of undefined (reading 'id')`.
+## Containers (isolated)
 
-Nginx (same VPS):
-
-```nginx
-location /api/ {
-    proxy_pass http://127.0.0.1:8010/api/;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-}
-```
-
-Quick test in browser: `https://crm.malwatrolley.com/api/health/live` must show JSON `{"status":"alive"}` — not the login page HTML.
-
-### Seed admin (one time)
-
-Hostinger Compose env me bhi set karo:
-
-```
-SEED_ADMIN_EMAIL=admin@malwatrolley.com
-SEED_ADMIN_PASSWORD=Malwa#8224
-```
-
-Phir:
-
-```bash
-docker exec -it mt_crm_api python -m scripts.seed_admin
-```
-
-Login: `admin@malwatrolley.com` / `Malwa#8224` (sirf seed ke baad).
-
-## Why previous deploy failed
-
-`malwa_crm_api is unhealthy` — usually:
-
-1. Frontend waited on backend health while API never stayed up
-2. `DATABASE_URL` missing → startup crash
-3. Healthcheck needed DB before API was ready
-
-New compose: **backend only**, health = `/api/health/live` (no DB required), API starts even if MySQL is down.
+| Name | Role |
+|------|------|
+| `mt_crm_api` | FastAPI :8010 |
+| `mt_crm_mysql` | MySQL (internal only, no host port) |
+| network `mt_crm_net` | private |
+| volume `mt_crm_mysql_data` | DB data |
