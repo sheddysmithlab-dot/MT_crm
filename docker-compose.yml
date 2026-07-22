@@ -55,7 +55,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: mt-crm-api:20260722b
+    image: mt-crm-api:20260722c
     container_name: mt_crm_api
     restart: unless-stopped
     depends_on:
@@ -68,8 +68,10 @@ services:
       APP_ENV: production
       DEBUG: "false"
       API_PREFIX: /api
-      # Hardcoded to this compose's MySQL — Hostinger env DATABASE_URL with
-      # host.docker.internal is IGNORED (that value crashes the API).
+      BUILD_ID: "20260722c"
+      FORCE_DOCKER_MYSQL: "1"
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-mtcrm_pass_change_me}
+      # Compose default; Hostinger UI may override — entrypoint forces mt_crm_mysql
       DATABASE_URL: mysql+pymysql://mtcrm:${MYSQL_PASSWORD:-mtcrm_pass_change_me}@mt_crm_mysql:3306/malwa_crm?charset=utf8mb4
       JWT_SECRET: ${JWT_SECRET:-change-me-set-in-hostinger-env}
       JWT_ALGORITHM: HS256
