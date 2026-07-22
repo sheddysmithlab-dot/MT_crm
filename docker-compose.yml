@@ -1,82 +1,65 @@
-# Malwa CRM — Docker Compose (Hostinger VPS / any Docker host)
+# Malwa CRM — BACKEND ONLY (Hostinger Docker Compose)
+# Does not touch other projects: own network + unique container name + dedicated port.
 #
-# Usage:
-#   1. cp .env.docker.example .env.docker
-#   2. Edit .env.docker (DB password, JWT_SECRET, domain)
-#   3. docker compose --env-file .env.docker up -d --build
+# Hostinger Compose URL:
+#   https://raw.githubusercontent.com/sheddysmithlab-dot/MT_crm/main/docker-compose.yml
 #
-# App:  http://SERVER_IP  or https://crm.malwatrolley.com (after DNS + SSL)
+# Project name in Hostinger UI: mt-crm-api  (or any unique name)
+#
+# Required environment variables (set in Hostinger Compose → Environment):
+#   DATABASE_URL=mysql+pymysql://u808821982_Malwa_crm:PASSWORD@HOST:3306/u808821982_Malwa_crm?charset=utf8mb4
+#   JWT_SECRET=long-random-secret
+#   CORS_ORIGINS=https://crm.malwatrolley.com
+#
+# MySQL host tips:
+#   - hPanel MySQL on same VPS: often "localhost" won't work from container —
+#     use host.docker.internal OR the VPS private IP / mysql hostname from hPanel
+#   - Remote Hostinger MySQL: use the hostname shown in hPanel (e.g. mysql.hostinger.com)
+
+name: mt-crm-api
 
 services:
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: malwa_crm_api
+    image: mt-crm-api:latest
+    container_name: mt_crm_api
     restart: unless-stopped
-    env_file:
-      - .env.docker
+    ports:
+      # Change 8010 if another app already uses it on this VPS
+      - "${MTCRM_API_PORT:-8010}:8000"
     environment:
+      APP_NAME: Malwa CRM API
       APP_ENV: production
       DEBUG: "false"
       API_PREFIX: /api
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET:-change-me-set-in-hostinger-env}
+      JWT_ALGORITHM: HS256
+      JWT_EXPIRE_MINUTES: ${JWT_EXPIRE_MINUTES:-10080}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://crm.malwatrolley.com}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@malwatrolley.com}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-ChangeMe822!}
+      SEED_ADMIN_NAME: ${SEED_ADMIN_NAME:-Malwa Admin}
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    expose:
-      - "8000"
     networks:
-      - malwa_net
+      - mt_crm_net
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health')"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 40s
-
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
-      args:
-        VITE_API_URL: ${VITE_API_URL:-/api}
-        VITE_USE_API: "true"
-    container_name: malwa_crm_web
-    restart: unless-stopped
-    ports:
-      - "${HTTP_PORT:-80}:80"
-    depends_on:
-      backend:
-        condition: service_healthy
-    networks:
-      - malwa_net
-
-  # Optional local MySQL (comment out if using Hostinger hPanel MySQL)
-  # Uncomment the block below OR use EXTERNAL DATABASE_URL in .env.docker
-  # mysql:
-  #   image: mysql:8.0
-  #   container_name: malwa_crm_mysql
-  #   restart: unless-stopped
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
-  #     MYSQL_DATABASE: ${MYSQL_DATABASE:-malwa_crm}
-  #     MYSQL_USER: ${MYSQL_USER:-crm_user}
-  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD:-changeme}
-  #   volumes:
-  #     - malwa_mysql_data:/var/lib/mysql
-  #     - ./backend/sql/malwa_crm_Data_base.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
-  #   ports:
-  #     - "3306:3306"
-  #   networks:
-  #     - malwa_net
-  #   healthcheck:
-  #     test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p${MYSQL_ROOT_PASSWORD:-rootpass}"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 10
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health/live', timeout=5)",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
 
 networks:
-  malwa_net:
+  mt_crm_net:
+    name: mt_crm_net
     driver: bridge
-
-# volumes:
-#   malwa_mysql_data:

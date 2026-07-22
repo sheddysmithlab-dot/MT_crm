@@ -1,51 +1,60 @@
-# Docker deploy on Hostinger VPS
+# Docker — Hostinger Compose (BACKEND ONLY)
 
-## Files
+## Paste this URL in Hostinger Compose
 
-| File | Purpose |
-|------|---------|
-| `docker-compose.yml` | Frontend + API (uses **external** Hostinger MySQL) |
-| `docker-compose.mysql.yml` | Frontend + API + **MySQL in Docker** |
-| `Dockerfile.frontend` | React build + nginx |
-| `backend/Dockerfile` | FastAPI |
-| `docker/nginx.conf` | `/` → SPA, `/api` → backend |
-| `.env.docker.example` | Env template |
-
-## Option A — Hostinger MySQL already created (hPanel)
-
-```bash
-# On VPS
-git clone https://github.com/sheddysmithlab-dot/MT_crm.git
-cd MT_crm
-cp .env.docker.example .env.docker
-# Edit DATABASE_URL with real password for u808821982_Malwa_crm
-# Import backend/sql/malwa_crm_Data_base.sql in phpMyAdmin first
-
-docker compose --env-file .env.docker up -d --build
-docker compose --env-file .env.docker exec backend python -m scripts.seed_admin
+```
+https://raw.githubusercontent.com/sheddysmithlab-dot/MT_crm/main/docker-compose.yml
 ```
 
-Open: `http://YOUR_VPS_IP`  
-Point DNS `crm.malwatrolley.com` → VPS IP, then add SSL (Certbot / Hostinger).
+**Project name:** `mt-crm-api` (unique — other Docker apps untouched)
 
-## Option B — MySQL inside Docker
+## What it deploys
 
-```bash
-cp .env.docker.example .env.docker
-# Set MYSQL_PASSWORD + JWT_SECRET
-docker compose -f docker-compose.mysql.yml --env-file .env.docker up -d --build
-docker compose -f docker-compose.mysql.yml --env-file .env.docker exec backend python -m scripts.seed_admin
+| Item | Value |
+|------|--------|
+| Service | backend only (no frontend) |
+| Container | `mt_crm_api` |
+| Network | `mt_crm_net` (isolated) |
+| Port on VPS | **8010** → container 8000 |
+
+Frontend alag File Manager / `deploy/frontend` se upload karo.  
+API: `http://VPS_IP:8010/api/health/live`
+
+## Environment (Hostinger Compose → Environment / Variables)
+
+```
+DATABASE_URL=mysql+pymysql://u808821982_Malwa_crm:YOUR_PASSWORD@host.docker.internal:3306/u808821982_Malwa_crm?charset=utf8mb4
+JWT_SECRET=long-random-secret-here
+CORS_ORIGINS=https://crm.malwatrolley.com
+MTCRM_API_PORT=8010
 ```
 
-## Useful commands
+Agar MySQL connect na ho:
 
-```bash
-docker compose --env-file .env.docker ps
-docker compose --env-file .env.docker logs -f backend
-docker compose --env-file .env.docker down
+- `host.docker.internal` ki jagah hPanel ka MySQL **hostname** try karo
+- Ya VPS ka private IP
+- phpMyAdmin se confirm karo user remote/docker se allow hai
+
+## After deploy
+
+```
+http://YOUR_VPS_IP:8010/api/health/live   → {"status":"alive"}
+http://YOUR_VPS_IP:8010/api/health        → database ok/error
+http://YOUR_VPS_IP:8010/api/docs
 ```
 
-## Note
+Seed admin (one time), Hostinger terminal / SSH:
 
-Shared Hostinger **without VPS/Docker** cannot run these files.  
-Need **VPS** (or Docker-enabled plan) with Docker Engine + Compose installed.
+```bash
+docker exec -it mt_crm_api python -m scripts.seed_admin
+```
+
+## Why previous deploy failed
+
+`malwa_crm_api is unhealthy` — usually:
+
+1. Frontend waited on backend health while API never stayed up
+2. `DATABASE_URL` missing → startup crash
+3. Healthcheck needed DB before API was ready
+
+New compose: **backend only**, health = `/api/health/live` (no DB required), API starts even if MySQL is down.

@@ -1,0 +1,60 @@
+# Optional: frontend + backend together (not for Hostinger Compose "backend-only")
+# Use: docker compose -f docker-compose.web.yml up -d --build
+
+name: mt-crm-web
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: mt-crm-api:latest
+    container_name: mt_crm_api_webstack
+    restart: unless-stopped
+    environment:
+      APP_ENV: production
+      DEBUG: "false"
+      API_PREFIX: /api
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET:-change-me}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://crm.malwatrolley.com}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    expose:
+      - "8000"
+    networks:
+      - mt_crm_web_net
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health/live', timeout=5)",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_API_URL: /api
+        VITE_USE_API: "true"
+    container_name: mt_crm_web
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-8088}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - mt_crm_web_net
+
+networks:
+  mt_crm_web_net:
+    name: mt_crm_web_net
+    driver: bridge

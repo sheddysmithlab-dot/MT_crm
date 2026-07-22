@@ -9,6 +9,12 @@ from app.core.config import settings
 router = APIRouter()
 
 
+@router.get("/health/live")
+def health_live():
+    """Liveness for Docker — does not require MySQL."""
+    return {"success": True, "status": "alive", "app": settings.APP_NAME}
+
+
 @router.get("/health")
 def health(db: Session = Depends(get_db)):
     db_ok = False
