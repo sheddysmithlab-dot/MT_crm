@@ -4,7 +4,7 @@
 # Hostinger Compose URL:
 #   https://raw.githubusercontent.com/sheddysmithlab-dot/MT_crm/main/docker-compose.yml
 #
-# Project name: mt-crm-api
+# Project name: mt-crm
 #
 # Environment (NO DATABASE_URL — built-in MySQL):
 #   JWT_SECRET=long-random-secret
@@ -14,7 +14,7 @@
 #   MTCRM_API_PORT=8015
 #   FORCE_DOCKER_MYSQL=1
 
-name: mt-crm-api
+name: mt-crm
 
 services:
   mt_crm_mysql:
