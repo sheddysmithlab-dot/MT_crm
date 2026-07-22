@@ -24,7 +24,7 @@ writeFileSync(
     'Malwa CRM Frontend — FRESH upload to Hostinger File Manager',
     '',
     'Target: crm.malwatrolley.com document root',
-    'API (direct): http://200.97.171.119:8010/api',
+    'API (direct): http://200.97.171.119:8015/api',
     '',
     '1. DELETE old files in document root (index, assets, api-bridge*, api-backend*)',
     '2. Upload ALL files from this folder',

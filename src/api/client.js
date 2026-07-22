@@ -87,7 +87,7 @@ export async function apiRequest(path, options = {}) {
 
   if (looksLikeHtml || (response.ok && text && data === null)) {
     throw new ApiError(
-      `API not reachable at ${url}. Frontend is calling ${getApiBaseUrl()} but Docker backend may be on :8010 — set Nginx proxy /api → 127.0.0.1:8010 or rebuild with correct VITE_API_URL.`,
+      `API not reachable at ${url}. Frontend is calling ${getApiBaseUrl()} but Docker backend may be on :8015 — set Nginx proxy /api → 127.0.0.1:8015 or rebuild with correct VITE_API_URL.`,
       { status: response.status || 0, detail: 'html_instead_of_json' }
     );
   }

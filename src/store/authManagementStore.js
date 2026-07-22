@@ -85,7 +85,7 @@ const useAuthManagementStore = create(
         if (!user?.id) {
           throw new Error(
             data?.detail ||
-              'Login response missing user. Check VITE_API_URL / Nginx /api proxy to Docker :8010.'
+              'Login response missing user. Check VITE_API_URL / Nginx /api proxy to Docker :8015.'
           );
         }
         const profile = data.profile || {
